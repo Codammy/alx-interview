@@ -9,10 +9,10 @@ const id = process.argv[2];
 const uri = `${URL}${resource}${id || ''}`;
 
 request(uri, function (error, response, body) {
-  if (error) {
-    throw new Error(error);
-  }
-  if (response.statusCode !== 200) {
+  //   if (error) {
+  //     throw new Error(error);
+  //   }
+  if (error || response.statusCode !== 200) {
     return;
   }
   const data = JSON.parse(body);
@@ -30,7 +30,8 @@ request(uri, function (error, response, body) {
   characters.forEach((character) => {
     request(character, function (error, response, body) {
       if (error) {
-        throw new Error(error);
+        // throw new Error(error);
+        return;
       }
       const ch = JSON.parse(body);
       console.log(ch.name);
