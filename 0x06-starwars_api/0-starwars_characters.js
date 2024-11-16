@@ -9,25 +9,26 @@ const id = process.argv[2];
 
 const url = `${URL}${resource}${id || ''}`;
 
-async function getCharacterNames(url) {
+async function getCharacterNames (url) {
   try {
-    const { body } = await fetch(url);
-    for (const character of body.characters) {
-      const { body } = await fetch(character);
-      console.log(body.name);
-    }
+    const body = await fetch(url);
+    const charactersPromise = body.characters.map((character) =>
+      fetch(character)
+    );
+    const characters = await Promise.all(charactersPromise);
+    characters.forEach(character => console.log(character.name));
   } catch (err) {
     throw new Error(err);
   }
 }
 
-function fetch(url) {
+function fetch (url) {
   return new Promise((resolve, reject) => {
     request(url, (err, res, body) => {
       if (err) {
-        reject({ code: res.statusCode, err });
+        reject(err);
       } else {
-        resolve({ code: res.statusCode, body: JSON.parse(body) });
+        resolve(JSON.parse(body));
       }
     });
   });
