@@ -1,12 +1,10 @@
 #!/usr/bin/python3
-"""
-Prime Game
+"""Prime Game
 """
 
 
 def isWinner(x, nums):
     """Winner deterministic function"""
-
     def sieve(max_n):
         if max_n < 2:
             return [False] * (max_n + 1)
@@ -34,13 +32,18 @@ def isWinner(x, nums):
     maria_wins = 0
     ben_wins = 0
 
+    valid_rounds = False
     for n in nums:
         if n < 1:
             continue
+        valid_rounds = True
         if prime_count[n] % 2 == 0:
             ben_wins += 1
         else:
             maria_wins += 1
+
+    if not valid_rounds:
+        return None
 
     if maria_wins > ben_wins:
         return "Maria"
