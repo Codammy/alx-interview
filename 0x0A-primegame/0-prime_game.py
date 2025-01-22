@@ -5,13 +5,11 @@ Prime Game
 
 
 def isWinner(x, nums):
-    """
-    Winner Deterministic function
-    """
+    """Winner deterministic function"""
+
     def sieve(max_n):
-        """Precompute prime numbers up to max_n using Sieve of Eratosthenes."""
         if max_n < 2:
-            return []
+            return [False] * (max_n + 1)
         primes = [True] * (max_n + 1)
         primes[0] = primes[1] = False
         for i in range(2, int(max_n**0.5) + 1):
@@ -36,18 +34,13 @@ def isWinner(x, nums):
     maria_wins = 0
     ben_wins = 0
 
-    valid_rounds = False
     for n in nums:
         if n < 1:
             continue
-        valid_rounds = True
         if prime_count[n] % 2 == 0:
             ben_wins += 1
         else:
             maria_wins += 1
-
-    if not valid_rounds:
-        return None
 
     if maria_wins > ben_wins:
         return "Maria"
