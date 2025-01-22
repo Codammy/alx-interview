@@ -4,7 +4,7 @@
 
 
 def isWinner(x, nums):
-    """Winner deterministic function"""
+    """Winner determinitic function"""
     def sieve(max_n):
         if max_n < 2:
             return [False] * (max_n + 1)
@@ -16,7 +16,7 @@ def isWinner(x, nums):
                     primes[j] = False
         return primes
 
-    if x == 0 or not nums:
+    if x <= 0 or not nums:
         return None
 
     max_n = max(nums)
