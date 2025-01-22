@@ -5,18 +5,28 @@ Prime Game
 
 
 def isWinner(x, nums):
-    """winner determinant function"""
+    """
+    Winner Deterministic function
+    """
     def sieve(max_n):
         """Precompute prime numbers up to max_n using Sieve of Eratosthenes."""
+        if max_n < 2:
+            return []
         primes = [True] * (max_n + 1)
-        primes[0] = primes[1] = False  # 0 and 1 are not prime
+        primes[0] = primes[1] = False
         for i in range(2, int(max_n**0.5) + 1):
             if primes[i]:
                 for j in range(i * i, max_n + 1, i):
                     primes[j] = False
         return primes
 
+    if x == 0 or not nums:
+        return None
+
     max_n = max(nums)
+    if max_n < 1:
+        return None
+
     primes = sieve(max_n)
 
     prime_count = [0] * (max_n + 1)
@@ -26,11 +36,18 @@ def isWinner(x, nums):
     maria_wins = 0
     ben_wins = 0
 
+    valid_rounds = False
     for n in nums:
+        if n < 1:
+            continue
+        valid_rounds = True
         if prime_count[n] % 2 == 0:
             ben_wins += 1
         else:
             maria_wins += 1
+
+    if not valid_rounds:
+        return None
 
     if maria_wins > ben_wins:
         return "Maria"
